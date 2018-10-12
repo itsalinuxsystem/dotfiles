@@ -1,0 +1,87 @@
+# /Users/amitsi/.config/tmuxinator/gDynamics.yml
+
+name: gDynamics
+#root: ~/
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Project hooks
+# Runs on project start, always
+# on_project_start: command
+# Run on project start, the first time
+# on_project_first_start: command
+# Run on project start, after the first time
+# on_project_restart: command
+# Run on project exit ( detaching from tmux session )
+# on_project_exit: command
+# Run on project stop
+# on_project_stop: command
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: editor
+
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+# startup_pane: 1
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t gDynamics
+
+windows:
+      # Synchronize all panes of this window, can be enabled before or after the pane commands run.
+      # 'before' represents legacy functionality and will be deprecated in a future release, in favour of 'after'
+      # synchronize: after
+  - latency:
+      layout: main-vertical
+      panes:
+        - pane_with_multiple_commands:
+          - sshpass -p test123 ssh -oStrictHostKeyChecking=no pluribus@10.9.0.107
+          - echo test123 | sudo -S ls /tmp
+          - sudo -S
+          - echo "#tc qdisc add dev vmgmt0 root netem delay 900ms"
+        - pane_with_multiple_commands:
+          - ssh amitsi@cartman
+          - more col_rest.py | grep repeer -A2 -B1
+          - echo "#python col_rest.py fabjoin"
+  - restAPI:
+      layout: main-vertical
+      panes:
+        - pane_with_multiple_commands:
+          - sshpass -p test123 ssh -oStrictHostKeyChecking=no pluribus@10.36.10.45
+          - echo test123 | sudo -S cli
+          - sudo -S cli
+          - switch-local
+          - vrouter-interface-config-show vrouter-name SW45 layout vertical show-interval 10
+        - pane_with_multiple_commands:
+          - ssh amitsi@cartman
+          - more col_rest.py | grep eth0.4091 -A2 -B2
+          - echo "#python col_rest.py ospf_cost"
+  - ansible:
+      layout: main-vertical
+      panes:
+        - pane_with_multiple_commands:
+          - sshpass -p test123 ssh -oStrictHostKeyChecking=no pluribus@10.9.0.121
+          - echo test123 | sudo -S cli
+          - sudo -S cli
+          - switch-local
+          - vlan-show id 10
+          - echo "#no vlan 10 present"
+        - pane_with_multiple_commands:
+          - ssh amitsi@10.13.27.157
+          - cd /home/amitsi/rajas/pluribus-ansible/ansible/playbooks
+          - echo "#ansible-playbook -i amitsi_hosts amitsi_vlan.yml -e "ansible_user=network-admin ansible_ssh_pass=test123" -vvvv"
