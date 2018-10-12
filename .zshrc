@@ -1,15 +1,14 @@
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/amitsingh/.oh-my-zsh
+export ZSH=/Users/amitsi/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
-ZSH_THEME="agnosterzak"
+ZSH_THEME="robbyrussell"
+#ZSH_THEME="agnosterzak"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -17,17 +16,17 @@ ZSH_THEME="agnosterzak"
 # looking in ~/.oh-my-zsh/themes/
 # An empty array have no effect
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
+alias mux="tmuxinator"
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
-
+export EDITOR='vim'
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
-
+#source ~/.bin/tmuxinator.zsh
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
 
